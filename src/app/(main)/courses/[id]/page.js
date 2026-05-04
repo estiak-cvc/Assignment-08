@@ -1,6 +1,7 @@
 import React from 'react';
 
-const DetailsPage = () => {
+const DetailsPage = async({params}) => {
+    const {id} = await params;
     return (
         <div>
             Courses Details Page

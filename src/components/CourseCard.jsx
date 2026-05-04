@@ -16,9 +16,9 @@ export default function CourseCard({ course }) {
         <p>{course.instructor}</p>
         <p>⭐ {course.rating}</p>
 
-        <button className="btn btn-primary mt-3">
+        <Link href={`/${course.id}`}><button className="btn btn-primary mt-3">
           View Details
-        </button>
+        </button></Link>
       </div>
     </div>
   );

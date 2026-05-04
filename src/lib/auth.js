@@ -3,7 +3,7 @@ dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 
 import { betterAuth } from "better-auth";
-import { MongoClient } from "mongodb";
+import { MongoClient } from "skillsphere";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const client = new MongoClient(process.env.DATABASE_URL);
@@ -16,5 +16,5 @@ export const auth = betterAuth({
   }),
     emailAndPassword: { 
     enabled: true, 
-  },
+  }
 });

@@ -1,110 +1,57 @@
-'use client';
+'use client'
+import { error } from 'better-auth/api';
+import Link from 'next/link';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+const RegisterPage = () => {
 
-export default function RegisterPage() {
-  const router = useRouter();
+   const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    photo: "",
-    password: "",
-  });
-
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  const handleRegisterFunc = (data) => { 
+    console.log(data, "data");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // 🔥 simple validation
-    if (!form.email || !form.password) {
-      setError("Email & Password required!");
-      return;
-    }
-
-    // 👉 fake success (later Firebase use korba)
-    console.log(form);
-
-    alert("Registration Successful ✅");
-
-    // redirect to login
-    router.push("/login");
-  };
+  console.log(errors, "errors");
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
-        
-        <h2 className="text-2xl font-bold text-center mb-4">
-          Register
-        </h2>
+    <div className="container mx-auto min-h-[80vh] flex justify-center items-center bg-slate-100">
+  <div className="p-6 rounded-xl bg-white w-full max-w-md shadow">
+    <h2 className="font-bold text-3xl text-center mb-6">Register Your Account</h2>
 
-        {error && (
-          <p className="text-red-500 text-sm mb-2">{error}</p>
-        )}
+    <form className="space-y-4" onSubmit={handleSubmit(handleRegisterFunc)}>
+        <fieldset className="fieldset">
+        <legend className="fieldset-legend">Name</legend>
+        <input type="Text" className="input w-full" {...register("name", {required: "Nmae field is required"})} placeholder="Type your name" />
+     {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+      </fieldset>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">Photo URL</legend>
+        <input type="text" className="input" {...register("photo", { required: "Photo URL required" })}  placeholder="Photo URL" />
+      {errors.photo && <p className="text-red-500">{errors.photo.message}</p>}
+      </fieldset>
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">Email</legend>
+        <input type="email" className="input w-full" {...register("email", {required: "Email field is required"})} placeholder="Type your email" />
+     {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+      </fieldset>
 
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            className="input input-bordered w-full"
-            onChange={handleChange}
-          />
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">Password</legend>
+        <input type="password" className="input" {...register("password", { required: "Password required" })}  placeholder="Type your password" />
+      {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+      </fieldset>
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="input input-bordered w-full"
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="photo"
-            placeholder="Photo URL"
-            className="input input-bordered w-full"
-            onChange={handleChange}
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="input input-bordered w-full"
-            onChange={handleChange}
-          />
-
-          <button className="btn btn-primary w-full mt-2">
-            Register
-          </button>
-        </form>
-
-        {/* 🔗 Login link */}
-        <p className="text-sm mt-4 text-center">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-500">
-            Login
-          </a>
-        </p>
-
-        {/* 🔥 Google Button */}
-        <button className="btn btn-outline w-full mt-3">
-          Continue with Google
-        </button>
-
-      </div>
-    </div>
+      <button className="btn w-full bg-amber-200 text-black">Register</button>
+    </form>
+  </div>
+</div>
   );
-}
+};
+
+export default RegisterPage;
